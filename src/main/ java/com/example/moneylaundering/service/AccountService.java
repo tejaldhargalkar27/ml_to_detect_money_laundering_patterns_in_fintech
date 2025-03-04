@@ -1,43 +1,37 @@
 package com.example.moneylaundering.service;
 
 import com.example.moneylaundering.model.Account;
+import com.example.moneylaundering.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
-    private List<Account> accounts = new ArrayList<>();
 
-    public List<Account> getAllAccounts() {
-        return accounts;
+    @Autowired
+    private AccountRepository accountRepository;
+
+    public List<Account> findAll() throws IOException {
+        return accountRepository.findAll();
     }
 
-    public Account createAccount(Account account) {
-        accounts.add(account);
-        return account;
+    public Optional<Account> findById(String accountId) throws IOException {
+        return accountRepository.findById(accountId);
     }
 
-    public Account getAccountById(String id) {
-        return accounts.stream()
-                .filter(account -> account.getAccountId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public void save(Account account) throws IOException {
+        accountRepository.save(account);
     }
 
-    public Account updateAccount(String id, Account updatedAccount) {
-        Account account = getAccountById(id);
-        if (account != null) {
-            account.setPartyId(updatedAccount.getPartyId());
-            account.setAccountType(updatedAccount.getAccountType());
-            account.setBalance(updatedAccount.getBalance());
-            account.setEntityDeleted(updatedAccount.isEntityDeleted());
-        }
-        return account;
+    public void update(Account account) throws IOException {
+        accountRepository.update(account);
     }
 
-    public void deleteAccount(String id) {
-        accounts.removeIf(account -> account.getAccountId().equals(id));
+    public void delete(String accountId) throws IOException {
+        accountRepository.delete(accountId);
     }
 }
