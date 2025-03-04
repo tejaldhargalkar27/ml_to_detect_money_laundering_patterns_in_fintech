@@ -1,0 +1,6 @@
+risk_case_event_id,event_time,type,party_id,risk_typology_measurements,risk_case_id
+risk1,2024-01-01 10:00:00,Fraud,party1,High-value transactions,risk_case1
+risk2,2024-01-02 11:00:00,Compliance,party2,Unusual geographic activity,risk_case2
+risk3,2024-01-03 12:00:00,Alert,party3,Multiple small transactions,risk_case3
+risk4,2024-01-04 13:00:00,Fraud,party4,Unusual transaction frequency,risk_case4
+risk5,2024-01-05 14:00:00,Compliance,party5,Wire transfers to high-risk countries,risk_case5

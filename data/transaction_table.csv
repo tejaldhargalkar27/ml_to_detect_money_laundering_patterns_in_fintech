@@ -1,0 +1,6 @@
+transaction_id,validity_start_time,is_entity_deleted,source_system,type,direction,account_id,counterparty_account,book_time,normalized_booked_amount,geographic_location
+trans1,2024-01-01 10:00:00,false,Internal,Wire Transfer,Credit,acc1,acc6,2024-01-01 10:05:00,1000000,New York
+trans2,2024-01-02 11:00:00,false,External,Cash Withdrawal,Debit,acc2,acc7,2024-01-02 11:10:00,500000,San Francisco
+trans3,2024-01-03 12:00:00,false,Internal,Deposit,Credit,acc3,acc8,2024-01-03 12:15:00,2000000,Chicago
+trans4,2024-01-04 13:00:00,false,Internal,Wire Transfer,Debit,acc4,acc9,2024-01-04 13:20:00,750000,Los Angeles
+trans5,2024-01-05 14:00:00,false,External,Cash Withdrawal,Credit,acc5,acc10,2024-01-05 14:25:00,300000,Miami

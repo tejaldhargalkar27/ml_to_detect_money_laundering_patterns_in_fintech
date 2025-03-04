@@ -1,0 +1,6 @@
+party_id,validity_start_time,is_entity_deleted,source_system,type,establishment_date,asset_value_range,legal_structure,industry_classification,risk_rating
+party1,2023-01-01 10:00:00,false,Internal,Individual,2010-01-01,$1M-$10M,LLC,Finance,High
+party2,2023-01-02 11:00:00,false,External,Company,2015-01-01,$10M-$50M,Corporation,Healthcare,Medium
+party3,2023-01-03 12:00:00,false,Internal,Individual,2020-01-01,$50M+,"Partnership",Technology,Low
+party4,2023-01-04 13:00:00,false,Internal,Company,2018-01-01,$1M-$10M,LLC,Finance,High
+party5,2023-01-05 14:00:00,false,External,Individual,2011-01-01,$10M-$50M,Corporation,Healthcare,Medium
