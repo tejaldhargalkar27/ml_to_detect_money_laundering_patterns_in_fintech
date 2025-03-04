@@ -1,0 +1,22 @@
+[
+    {
+        "ruleId": "1",
+        "description": "Large transaction within a short period",
+        "threshold": "10000"
+    },
+    {
+        "ruleId": "2",
+        "description": "Multiple transactions to high-risk countries",
+        "threshold": "5"
+    },
+    {
+        "ruleId": "3",
+        "description": "Frequent transactions just below the reporting threshold",
+        "threshold": "9500"
+    },
+    {
+        "ruleId": "4",
+        "description": "Suspicious transaction patterns over time",
+        "threshold": "variable"
+    }
+]
