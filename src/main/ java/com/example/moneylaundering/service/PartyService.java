@@ -1,44 +1,37 @@
 package com.example.moneylaundering.service;
 
 import com.example.moneylaundering.model.Party;
+import com.example.moneylaundering.repository.PartyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PartyService {
-    private List<Party> parties = new ArrayList<>();
 
-    public List<Party> getAllParties() {
-        return parties;
+    @Autowired
+    private PartyRepository partyRepository;
+
+    public List<Party> findAll() throws IOException {
+        return partyRepository.findAll();
     }
 
-    public Party createParty(Party party) {
-        parties.add(party);
-        return party;
+    public Optional<Party> findById(String partyId) throws IOException {
+        return partyRepository.findById(partyId);
     }
 
-    public Party getPartyById(String id) {
-        return parties.stream()
-                .filter(party -> party.getPartyId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public void save(Party party) throws IOException {
+        partyRepository.save(party);
     }
 
-    public Party updateParty(String id, Party updatedParty) {
-        Party party = getPartyById(id);
-        if (party != null) {
-            party.setName(updatedParty.getName());
-            party.setAddress(updatedParty.getAddress());
-            party.setPhoneNumber(updatedParty.getPhoneNumber());
-            party.setEmail(updatedParty.getEmail());
-            party.setRiskCategory(updatedParty.getRiskCategory());
-        }
-        return party;
+    public void update(Party party) throws IOException {
+        partyRepository.update(party);
     }
 
-    public void deleteParty(String id) {
-        parties.removeIf(party -> party.getPartyId().equals(id));
+    public void delete(String partyId) throws IOException {
+        partyRepository.delete(partyId);
     }
 }
