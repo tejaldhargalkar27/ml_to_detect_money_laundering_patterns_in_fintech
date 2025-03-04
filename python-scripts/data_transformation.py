@@ -52,6 +52,21 @@ def preprocess_text_data(df):
     df['transaction_notes_tokenized'] = df['transaction_notes'].apply(lambda x: x.split())
     df['transaction_notes_cleaned'] = df['transaction_notes'].apply(lambda x: ' '.join([word for word in x.split() if word not in stopwords]))
     return df
+    
+def save_transformed_data(df, file_path):
+    df.to_csv(file_path, index=False)
+
+def main():
+    # Load cleaned data
+    cleaned_transaction_file = '../data/cleaned_transaction_table.csv'
+    transaction_df = load_cleaned_data(cleaned_transaction_file)
+
+    # Transform data
+    transformed_transaction_df = transform_data(transaction_df)
+
+    # Save transformed data
+    transformed_transaction_file = '../data/transformed_transaction_table.csv'
+    save_transformed_data(transformed_transaction_df, transformed_transaction_file)
 
 def transform_data(file_path):
     df = pd.read_csv(file_path)
