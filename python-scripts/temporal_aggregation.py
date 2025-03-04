@@ -1,5 +1,33 @@
 import pandas as pd
 
+def load_cleaned_data(file_path):
+    return pd.read_csv(file_path)
+
+def aggregate_temporal_data(df):
+    # Example temporal aggregation operations
+    df['book_time'] = pd.to_datetime(df['book_time'])
+    df.set_index('book_time', inplace=True)
+    aggregated_df = df.resample('M').agg({
+        'transaction_id': 'count',
+        'normalized_booked_amount': 'sum'
+    }).rename(columns={'transaction_id': 'transaction_count', 'normalized_booked_amount': 'total_amount'})
+    return aggregated_df
+
+def save_aggregated_data(df, file_path):
+    df.to_csv(file_path)
+
+def main():
+    # Load cleaned data
+    cleaned_transaction_file = '../data/cleaned_transaction_table.csv'
+    transaction_df = load_cleaned_data(cleaned_transaction_file)
+
+    # Aggregate temporal data
+    aggregated_transaction_df = aggregate_temporal_data(transaction_df)
+
+    # Save aggregated data
+    aggregated_transaction_file = '../data/aggregated_transaction_table.csv'
+    save_aggregated_data(aggregated_transaction_df, aggregated_transaction_file)
+
 def define_time_windows(df):
     df['hourly_aggregation'] = df['transaction_amount'].resample('H').sum()
     df['daily_aggregation'] = df['transaction_amount'].resample('D').sum()
