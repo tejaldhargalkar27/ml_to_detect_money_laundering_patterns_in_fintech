@@ -1,15 +1,37 @@
 package com.example.moneylaundering.model;
 
+import com.opencsv.bean.CsvBindByName;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class Transaction {
+
+    @Id
+    @CsvBindByName
     private String transactionId;
+    @CsvBindByName
+    private LocalDateTime validityStartTime;
+    @CsvBindByName
+    private Boolean isEntityDeleted;
+    @CsvBindByName
+    private String sourceSystem;
+    @CsvBindByName
+    private String type;
+    @CsvBindByName
+    private String direction;
+    @CsvBindByName
     private String accountId;
-    private String transactionType;
-    private double amount;
-    private LocalDateTime timestamp;
-    private String counterparty;
-    private String location;
+    @CsvBindByName
+    private String counterpartyAccount;
+    @CsvBindByName
+    private LocalDateTime bookTime;
+    @CsvBindByName
+    private Integer normalizedBookedAmount;
+    @CsvBindByName
+    private String geographicLocation;
     
     // Getters and Setters
 
