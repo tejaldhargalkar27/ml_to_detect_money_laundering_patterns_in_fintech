@@ -1,12 +1,28 @@
 package com.example.moneylaundering.model;
 
+import com.opencsv.bean.CsvBindByName;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
+
+@Entity
 public class Account {
+
+    @Id
+    @CsvBindByName
     private String accountId;
+    @CsvBindByName
     private String partyId;
-    private String accountType;
-    private double balance;
-    private boolean isEntityDeleted;
-    
+    @CsvBindByName
+    private LocalDateTime validityStartTime;
+    @CsvBindByName
+    private Boolean isEntityDeleted;
+    @CsvBindByName
+    private String role;
+    @CsvBindByName
+    private String sourceSystem;
+
     // Getters and Setters
 
     public String getAccountId() {
