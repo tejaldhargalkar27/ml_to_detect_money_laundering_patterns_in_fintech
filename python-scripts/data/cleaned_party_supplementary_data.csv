@@ -1,0 +1,6 @@
+party_supplementary_data_id,validity_start_time,is_entity_deleted,source_system,party_id,credit_score,risk_factors,regulatory_identifiers,income_level
+supp1,2024-01-01 10:00:00,False,Internal,party1,750,High debt-to-income ratio,reg1,High
+supp2,2024-01-02 11:00:00,False,External,party2,670,Multiple accounts,reg2,Medium
+supp3,2024-01-03 12:00:00,False,Internal,party3,800,Low savings,reg3,Low
+supp4,2024-01-04 13:00:00,False,Internal,party4,720,High number of credit inquiries,reg4,Medium
+supp5,2024-01-05 14:00:00,False,External,party5,680,Recent large transactions,reg5,High
