@@ -1,6 +1,6 @@
 account_id,party_id,validity_start_time,is_entity_deleted,role,source_system
-acc1,party1,2024-01-01 10:00:00,false,Owner,Internal
-acc2,party2,2024-01-02 11:00:00,false,Signatory,External
-acc3,party3,2024-01-03 12:00:00,false,Beneficiary,Internal
-acc4,party4,2024-01-04 13:00:00,false,Owner,Internal
-acc5,party5,2024-01-05 14:00:00,false,Signatory,External
+acc1,party1,2025-01-01 10:00:00,False,Owner,Internal
+acc2,party2,2025-01-02 11:00:00,False,Signatory,External
+acc3,party3,2025-01-03 12:00:00,False,Beneficiary,Internal
+acc4,party4,2025-01-04 13:00:00,False,Owner,Internal
+acc5,party5,2025-01-05 14:00:00,False,Signatory,External
