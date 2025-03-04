@@ -1,13 +1,27 @@
 package com.example.moneylaundering.model;
 
+import com.opencsv.bean.CsvBindByName;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-public class RiskEvent {
-    private String riskEventId;
-    private String type;
+@Entity
+public class RiskCaseEvent {
+
+    @Id
+    @CsvBindByName
+    private String riskCaseEventId;
+    @CsvBindByName
     private LocalDateTime eventTime;
-    private String description;
-    
+    @CsvBindByName
+    private String type;
+    @CsvBindByName
+    private String partyId;
+    @CsvBindByName
+    private String riskTypologyMeasurements;
+    @CsvBindByName
+    private String riskCaseId;
     // Getters and Setters
 
     public String getRiskEventId() {
