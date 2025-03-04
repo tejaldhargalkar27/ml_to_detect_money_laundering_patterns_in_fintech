@@ -5,37 +5,39 @@ import com.example.moneylaundering.service.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/parties")
+@RequestMapping("/api/parties")
 public class PartyController {
 
     @Autowired
     private PartyService partyService;
 
     @GetMapping
-    public List<Party> getAllParties() {
-        return partyService.getAllParties();
-    }
-
-    @PostMapping
-    public Party createParty(@RequestBody Party party) {
-        return partyService.createParty(party);
+    public List<Party> getAllParties() throws IOException {
+        return partyService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Party getPartyById(@PathVariable String id) {
-        return partyService.getPartyById(id);
+    public Party getPartyById(@PathVariable String id) throws IOException {
+        return partyService.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public void createParty(@RequestBody Party party) throws IOException {
+        partyService.save(party);
     }
 
     @PutMapping("/{id}")
-    public Party updateParty(@PathVariable String id, @RequestBody Party party) {
-        return partyService.updateParty(id, party);
+    public void updateParty(@PathVariable String id, @RequestBody Party party) throws IOException {
+        party.setPartyId(id);
+        partyService.update(party);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteParty(@PathVariable String id) {
-        partyService.deleteParty(id);
+    public void deleteParty(@PathVariable String id) throws IOException {
+        partyService.delete(id);
     }
 }
