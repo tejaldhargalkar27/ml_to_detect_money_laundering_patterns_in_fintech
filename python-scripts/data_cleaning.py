@@ -1,56 +1,54 @@
+import requests
 import pandas as pd
-from sklearn.impute import SimpleImputer
-from sklearn.neighbors import KNeighborsRegressor
 
-def handle_missing_values(df):
-    # Categorize missing data
-    mcar = df.isna().sum() / len(df)
-    mar = df[df.columns[df.isna().sum() > 0.05]]
-    
-    # Imputation techniques
-    imputer_mean_median = SimpleImputer(strategy='mean')
-    imputer_mode = SimpleImputer(strategy='most_frequent')
-    
-    df['transaction_amount'] = imputer_mean_median.fit_transform(df[['transaction_amount']])
-    df['transaction_type'] = imputer_mode.fit_transform(df[['transaction_type']])
-    df['account_status'] = imputer_mode.fit_transform(df[['account_status']])
-    
-    # Regression-based imputation
-    knn_imputer = KNeighborsRegressor(n_neighbors=5)
-    df['account_balance'] = df['account_balance'].fillna(knn_imputer.fit_transform(df[['transaction_frequency', 'customer_income']])[:, 0])
-    
-    # Handle missing timestamps
-    df['timestamp'] = df['timestamp'].fillna(method='ffill').fillna(method='bfill')
-    
+def fetch_data_from_api(url):
+    response = requests.get(url)
+    response.raise_for_status()  # Raise an error for bad status codes
+    return pd.DataFrame(response.json())
+
+def clean_data(df):
+    """Perform data cleaning operations on the DataFrame."""
+    # Example cleaning operations
+    df.dropna(inplace=True)  # Drop rows with missing values
+    df['validity_start_time'] = pd.to_datetime(df['validity_start_time'])  # Convert to datetime
+    df['is_entity_deleted'] = df['is_entity_deleted'].astype(bool)  # Convert to boolean
+
+    # Add more cleaning operations as required
     return df
 
-def remove_duplicates(df):
-    df.drop_duplicates(subset=['transaction_id', 'account_id', 'timestamp'], inplace=True)
-    return df
+def save_clean_data(df, file_path):
+    """Save the cleaned DataFrame to a CSV file."""
+    df.to_csv(file_path, index=False)
 
-def standardize_format(df):
-    # Standardize date formats
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
-    # Standardize numeric precision
-    df = df.round(2)
-    # Standardize category fields
-    df['currency_code'] = df['currency_code'].str.upper()
-    return df
+def main():
+    # Define API URLs
+    base_url = 'http://localhost:8080/api'
+    account_url = f'{base_url}/accounts'
+    party_url = f'{base_url}/parties'
+    party_supplementary_url = f'{base_url}/party-supplementary-data'
+    risk_case_url = f'{base_url}/risk-case-events'
+    transaction_url = f'{base_url}/transactions'
 
-def mask_data_entry_errors(df):
-    # Identify and correct errors
-    df['account_number'] = df['account_number'].apply(lambda x: x if len(str(x)) == 10 else None)
-    df['transaction_type'] = df['transaction_type'].apply(lambda x: x if x in ['DEBIT', 'CREDIT'] else None)
-    return df
+    # Fetch data from APIs
+    account_df = fetch_data_from_api(account_url)
+    party_df = fetch_data_from_api(party_url)
+    party_supplementary_df = fetch_data_from_api(party_supplementary_url)
+    risk_case_df = fetch_data_from_api(risk_case_url)
+    transaction_df = fetch_data_from_api(transaction_url)
 
-def clean_data(file_path):
-    df = pd.read_csv(file_path)
-    df = handle_missing_values(df)
-    df = remove_duplicates(df)
-    df = standardize_format(df)
-    df = mask_data_entry_errors(df)
-    return df
+    # Clean data
+    cleaned_account_df = clean_data(account_df)
+    cleaned_party_df = clean_data(party_df)
+    cleaned_party_supplementary_df = clean_data(party_supplementary_df)
+    cleaned_risk_case_df = clean_data(risk_case_df)
+    cleaned_transaction_df = clean_data(transaction_df)
+
+    # Save cleaned data
+    save_clean_data(cleaned_account_df, '../data/cleaned_account_table.csv')
+    save_clean_data(cleaned_party_df, '../data/cleaned_party_table.csv')
+    save_clean_data(cleaned_party_supplementary_df, '../data/cleaned_party_supplementary_data.csv')
+    save_clean_data(cleaned_risk_case_df, '../data/cleaned_risk_case_event_table.csv')
+    save_clean_data(cleaned_transaction_df, '../data/cleaned_transaction_table.csv')
 
 if __name__ == "__main__":
-    cleaned_data = clean_data('data/transactions.csv')
-    cleaned_data.to_csv('data/cleaned_transactions.csv', index=False)
+    main()
